@@ -55,7 +55,7 @@ La entropía se mantiene mayormente alta, con algunas caídas en ciertas áreas.
 - El firmware no está completamente cifrado.
 - Algunas partes pueden estar comprimidas o contener código legible.
 
-![[Entropia.png]]
+![texto alternativo](/Imagenes/Entropia.png)
 
 Extraer contenido del binario.
 
@@ -64,10 +64,10 @@ binwalk -ev firmware.bin
 ```
 
 Su contenido es este.
-![[Contenido.png]]
+![texto alternativo](/Imagenes/Contenido.png)
 
 Por el momento solo explorare la primer carpeta.
-![[Contenido1.png]]
+![texto alternativo](/Imagenes/Contenido1.png)
 
 El contenido del archivo 2818.
 ```bash
@@ -75,16 +75,17 @@ strings 2818 | grep -iE "password|passwd|admin|user|key|credential|secret|userna
 ```
 
 Su salida no muestra algo tan relevante para mi pero si puede profundizar mas, se encontró una gran cantidad de cadenas relacionadas con credenciales y claves.
-![[2818.png]]
+![texto alternativo](/Imagenes/2818.png)
 
 Como objetivo principal explore la carpeta home y este contiene 3 archivos.
-![[home.png]]
+![texto alternativo](/Imagenes/home.png)
 
 El text contiene hash y el comprimido contiene script y ejecutables.
-![[ContenidoHome.png]]
+![texto alternativo](/Imagenes/ContenidoHome.png)
 
 En la carpeta server se encuentra varios archivos pero por ahora no buscare mucho.
-![[Cserver.png]]
+![texto alternativo](/Imagenes/Cserver.png)
+
 
 ```bash
  grep -iE "password|username|admin|key|secret|pass|http|local|user|pass|cam|firmware|dlink|monitor|server|services|ip" *.ini        
@@ -94,7 +95,7 @@ xver.ini:Cabname64 =UltraRTCamX64.cab
 ```
 
 Navegando en la carpeta `/etc/ssl/certs` encontré certificados.
-![[Cerst.png]]
+![texto alternativo](/Imagenes/Cerst.png)
 
 En la carpeta `/etc/stunnel` encontré mas certificados pero en este caso son privados.
 ```bash
@@ -102,7 +103,7 @@ cat stunnel.pem
 ```
 
 En la carpeta `/etc/Wireless` encontré configuraciones.
-![[Wir.png]]
+![texto alternativo](/Imagenes/Wir.png)
 
 Realizando un grep con algunos parámetros de interés encontré algunas cosas interesante:
 
@@ -113,15 +114,15 @@ grep -iE "password|username|admin|key|secret|credential|user|firmware|version|ca
 
 Se puede ver puertos,servicios,canales y algunos usuario.Luego de usar grep decidí explorar con cat y encontré algunas cosas mas,como la configuración de servicios ,direcciones url,configuración de tunnel y configuración onvif.
 
-![[User.png]]
-![[ovnif.png]]
-![[Tunnel.png]]
+![texto alternativo](/Imagenes/User.png)
+![texto alternativo](/Imagenes/ovnif.png)
+![texto alternativo](/Imagenes/Tunnel.png)
 
 Este es todo el contenido de la carpeta etc:
-![[ETC.png]]
+![texto alternativo](/Imagenes/ETC.png)
 
 Por ultimo explorare la carpeta web.
-![[Web.png]]
+![texto alternativo](/Imagenes/Web.png)
 # Emulación del firmware
 Encontré la carpeta web y decidí montar todo el sistema de archivos para poder visualizar el sitio web de la cámara.
 
@@ -160,17 +161,17 @@ Una vez montado todo se procede a iniciar la shell:
 sudo chroot . /bin/sh
 ```
 
-![[Bin.png]]
+![texto alternativo](/Imagenes/Bin.png)
 Para comprobar el user use el comando `whoami` y busque el archivo `passwd`.
-![[Whoami.png]]
-![[Passdw.png]]
+![texto alternativo](/Imagenes/Whoami.png)
+![texto alternativo](/Imagenes/Passdw.png)
 
 Ahora se ejecuta el script `rcS` que se inicia al arranque para configurar el sistema, montar sistemas de archivos, preparar el entorno, y ejecutar otros scripts que son necesarios para que el sistema esté listo para su uso.
 
-![[Scripts.png]]
+![texto alternativo](/Imagenes/Scripts.png)
 
 Hice una comprobación de puertos con `netstat`.
-![[Port.png]]
+![texto alternativo](/Imagenes/Port.png)
 Tiene tres puertos abierto y realice la comprobación con nmap para ver las versiones de los puertos.
 
 Escaneo del puerto con nmap para ver la version.
@@ -178,17 +179,17 @@ Escaneo del puerto con nmap para ver la version.
 nmap -sV  0.0.0.0 -p 80,8080,443 -vvv
 ```
 
-![[nmap.png]]
+![texto alternativo](/Imagenes/nmap.png)
 Claramente nos muestra que contiene el sitio web de la cámara, para entrar al sitio me dirigí a la dirección `0.0.0.0:80`.
 
 Se puede ver el la pagina principal del sitio y tipo de producto y su version de firmware.
-![[Port80.png]]
+![texto alternativo](/Imagenes/Port80.png)
 
 Explorando un poco mas el sitio puedo ver mas información del dispositivo.
-![[InfoDevices.png]]
+![texto alternativo](/Imagenes/InfoDevices.png)
 
 En otro apartado del sitio se puede ver en Wireless que se puede configurar con dos modos de seguridad.
-![[Wire.png]]
+![texto alternativo](/Imagenes/Wire.png)
 # Vulnerabilidades
 Estuve realizando búsqueda de vulnerabilidades en internet y no logre encontrar ninguna pero posiblemente algunas vulnerabilidades de versiones mas alta a la del firmware 1.07 puedan ser probada en esta version.
 
