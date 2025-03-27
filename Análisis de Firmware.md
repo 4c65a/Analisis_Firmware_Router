@@ -33,8 +33,7 @@ Existen distintas manera de conseguir el firmware en mi caso lo descargo porque 
 
 Dejo un video de ejemplo para que explore: [Extraction Firmware](https://www.youtube.com/watch?v=eMVr_iAuAA4&pp=ygUUIEZpcm13YXJlIEV4dHJhY3Rpb24%3D)
 
-![[Descarga.png]]
-
+![texto alternativo](Descarga.png)
 
 # Extracción del firmware y análisis
 La guía recomienda usar algunos comandos para obtener información del binario, pero en mi caso, no apareció nada demasiado relevante. Así que en lugar de detenerme ahí, voy a seguir adelante y extraer su contenido.
